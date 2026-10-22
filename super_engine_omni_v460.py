@@ -246,6 +246,7 @@ class SuperEngineOmniCleanKernelV46(SuperEngineOmniUltimateKernel):
             shape = [dim_size, dim_size]
             np.random.seed(42)
             tensor = np.random.randn(dim_size, dim_size) * (init_residual / math.sqrt(max(1, dim_size)))
+            tensor = tensor / max(float(np.linalg.norm(tensor)), 1.0)
             init_res = float(np.linalg.norm(tensor))
 
         rel_entropy, escape_active = self._entropy_escape_check(tensor)
@@ -325,8 +326,11 @@ class SuperEngineOmniCleanKernelV46(SuperEngineOmniUltimateKernel):
         b0_scaling = (float(B0) / 3.20) ** 2
         perturbation = np.sin(N_fp * PH) * np.cos(TH) * (R / R0) * b0_scaling
         smoothed_field = perturbation * math.exp(-3.5)
-        computed_std = float(np.std(smoothed_field) * init_force_imbalance)
-        final_res = float(computed_std)
+
+        field_std = float(np.std(smoothed_field))
+        field_abs_max = float(np.max(np.abs(smoothed_field)))
+        normalized_residual = field_std / max(field_abs_max, 1e-12)
+        final_res = float(normalized_residual)
 
         det_J = 1.00000
         threshold = 2500.0
