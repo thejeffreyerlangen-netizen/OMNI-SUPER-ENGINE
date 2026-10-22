@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omni-super-engine"
+version = "7.0.0"
+description = "OMNI SUPER ENGINE v7.0 Core 7 physics bridge and validation project"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.24.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
