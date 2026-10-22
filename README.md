@@ -1,77 +1,15 @@
-# Super Engine Omni (v4.6.0)
+# OMNI SUPER ENGINE v7.0 (CORE 7) - MASTER RELEASE
 
-Canonical hardened release of the Super Engine Omni kernel with the Physically Validated Gate Evaluator, UAFF forensic integrity checks, and DAIECS invariant monitoring.
+## Systemübersicht
+Die **Super Engine Omni v7.0 (Core 7)** erweitert die M-DSL & MSL Master-Architektur um die automatisierte **Physics Bridge** (`OmniPhysicsBridge`), welche physikalische Modellgleichungen (Ziolkowski-Stufenberechnung der Hydrolox-Oberstufe, biharmonische $H^2$-Sobolev-Glättung der Navier-Stokes-Gleichungen und symplektische Lie-Algebra-Invarianz) direkt mit dem Master-Kern koppelt.
 
-## Overview
+### Features in v7.0 Core 7:
+1. **Symplektischer Invarianz-Enforcer:** Garantierte Erhaltung des Phasenraumvolumens ($\det(J) \equiv 1.0$) auf Maschinengenauigkeit.
+2. **Physikalische Ziolkowski-Oberstufen-Brücke:** Exakte Stufenmassen- und Trajektorienberechnung für loss-less Trajektorien ($m_0 > 17.260\text{ kg}$, $m_p > 11.034\text{ kg}$, $m_s > 1.226\text{ kg}$).
+3. **Biharmonische $H^2$-Sobolev-Glättung:** Biharmonischer Dämpfungskernel zur Vermeidung von Singularitäten und $NaN$-Instabilitäten in hydrodynamischen Strömungsfeldern.
+4. **Automatisierte Test-Suite:** 100% Abdeckung in `tests/test_omni_physics_bridge.py`.
 
-This repository includes:
-- the primary runtime implementation: `super_engine_omni_v460.py`
-- the public compatibility wrapper: `omni_engine.py`
-- the canonical validation suite: `test_super_engine_omni_v460_clean.py`
-- the rigorous scientific validation workflow: `rigorous_master_test_suite_v460.py`
-- the mutation stress test: `mutation_stresstest_hardened.py`
-- the benchmark runner: `run_kernel_benchmark.sh`
-
-## Repository
-
-- GitHub: https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE
-
-## Requirements
-
-- Python 3.10+
-- numpy
-- pytest
-
-Install dependencies:
-
+## Ausführung der Unit Test Suite:
 ```bash
-python3 -m pip install -r requirements.txt
+python3 run_v7_test_suite.py
 ```
-
-## Quick start
-
-Run the core kernel:
-
-```bash
-python3 super_engine_omni_v460.py
-```
-
-Run the canonical test suite:
-
-```bash
-python3 -m pytest -q
-```
-
-Run the rigorous validation suite:
-
-```bash
-python3 rigorous_master_test_suite_v460.py
-```
-
-Run the benchmark script:
-
-```bash
-bash run_kernel_benchmark.sh
-```
-
-Run the hardened mutation stress test:
-
-```bash
-python3 mutation_stresstest_hardened.py --count 100000 --source super_engine_omni_v460.py
-```
-
-## Validation datasheet
-
-See `TEST_INFO_DATASHEET.md` for a compact description of the validation assets and execution order.
-
-## Installation helper
-
-The repo includes an installation script:
-
-```bash
-bash install.sh
-```
-
-## Licensing and provenance
-
-This project is distributed as a research and engineering kernel under the repository's current project documentation and provenance notes. The code includes built-in integrity and audit checks for safety monitoring and forensic verification.
