@@ -1,6 +1,22 @@
-set -e
-echo 'SUPER ENGINE OMNI v4.0.0 ONE-CLICK INSTALLER'
-python3 -m pip install --quiet numpy scipy
-chmod +x run_kernel_benchmark.sh test_super_engine_omni_v40_clean.py
-echo 'Setup complete! Running benchmark...'
-bash run_kernel_benchmark.sh run_all 'GitHub-Auditor'
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR"
+
+if [ ! -d ".venv" ]; then
+  python3 -m venv .venv
+fi
+
+# shellcheck disable=SC1091
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pytest -q
+
+echo ""
+echo "Setup complete."
+echo "Run the project with:"
+echo "  python run_v7_test_suite.py"
+echo "  python -m pytest -q"
