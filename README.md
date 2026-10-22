@@ -1,49 +1,29 @@
-# OMNI SUPER ENGINE v7.0 (CORE 7)
+# Super Engine Omni v7.0 (Core 7)
 
-A compact physics-focused Python project for symplectic invariant enforcement, Ziolkowski stage translation, and hyper-viscous smoothing for fluid-field evolution.
+Mathematical simulation and computation framework for continuum mechanics, Navier-Stokes with hyperviscosity (H² Sobolev smoothing), and Ziolkowski rocket dynamics.
 
-## Overview
+## Quickstart (Windows PowerShell)
 
-OMNI SUPER ENGINE v7.0 is a lightweight engineering and research-oriented implementation centered on three core ideas:
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python run_v7_test_suite.py
+```
 
-- symplectic invariant enforcement via determinant scaling
-- Ziolkowski upper-stage mass and trajectory translation
-- H² Sobolev-inspired smoothing for stable flow-field evolution
+## Quickstart (bash / Linux / macOS)
 
-The active project code is centered on the master engine and the validation suite in `tests/`.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python run_v7_test_suite.py
+```
 
-## Current status
+## Validation
 
-This repository is in a release-ready project state for local development and validation, but still contains legacy packaged artifacts in the root directory. The active code path is the v7.0 implementation and test suite.
-
-## Features
-
-- symplectic invariant enforcement with `det(J) == 1.0`
-- Ziolkowski upper-stage mass model
-- hyperviscous smoothing layer for fluid evolution
-- master engine evolution cycle
-- automated validation in `tests/test_omni_physics_bridge.py`
-
-## Repository structure
-
-```text
-OMNI-SUPER-ENGINE/
-├── README.md
-├── LICENSE
-├── CHANGELOG.md
-├── install.sh
-├── requirements.txt
-├── pytest.ini
-├── pyproject.toml
-├── omni_super_engine_master_v7.py
-├── run_v7_test_suite.py
-├── tests/
-│   └── test_omni_physics_bridge.py
-├── .gitignore
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── docs/
-│   └── PROJECT_STATUS.md
-├── legacy and packaged artifacts
-└── other repository metadata
+```bash
+python -m pytest -q
+```

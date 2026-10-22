@@ -1,22 +1,9 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
+set -e
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$ROOT_DIR"
-
-if [ ! -d ".venv" ]; then
-  python3 -m venv .venv
-fi
-
-# shellcheck disable=SC1091
+echo "Installing virtual environment for Super Engine Omni v7.0..."
+python3 -m venv .venv
 source .venv/bin/activate
-
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-python -m pytest -q
-
-echo ""
-echo "Setup complete."
-echo "Run the project with:"
-echo "  python run_v7_test_suite.py"
-echo "  python -m pytest -q"
+echo "Installation complete."
