@@ -1,0 +1,29 @@
+{
+  "engine": "Super-Engine-Omni-v7.0-Core7",
+  "status": "SCaffold_Validation_Ready",
+  "axiomatics": {
+    "N": 20,
+    "domain": "V = H^2(M; C)",
+    "formulation": "typed_sobolev_hamiltonian_reference"
+  },
+  "benchmark": {
+    "name": "openai/math",
+    "reference": "math_corpus_validation_reference",
+    "families": 372,
+    "manuscripts": 719
+  },
+  "stress_validation": {
+    "cycles_total": 3000,
+    "cycles_passed": 3000,
+    "stabilized_anomalies": 750
+  },
+  "ronmetrik": {
+    "mode": "adaptive_damping",
+    "correction_events": 59
+  },
+  "matrix": {
+    "symplectic_tolerance": 1e-8,
+    "frequency_hz": 98.112
+  },
+  "checksum": "core7-omni-audit-v1"
+}

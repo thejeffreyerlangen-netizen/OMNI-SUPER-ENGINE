@@ -1,77 +1,57 @@
-# Super Engine Omni (v4.6.0)
+# Super Engine Omni v7.0 (Core 7)
 
-Canonical hardened release of the Super Engine Omni kernel with the Physically Validated Gate Evaluator, UAFF forensic integrity checks, and DAIECS invariant monitoring.
+This branch introduces the `Core 7` engineering scaffold for the existing OMNI-SUPER-ENGINE repository. It keeps the project aligned with the current Python-based repository structure while adding a documented benchmark and validation layer for the `openai/math` corpus, a stress-cycle audit trail, and the Sobolev/Hamiltonian formulation used in the current analysis context.
 
-## Overview
+## Purpose
 
-This repository includes:
-- the primary runtime implementation: `super_engine_omni_v460.py`
-- the public compatibility wrapper: `omni_engine.py`
-- the canonical validation suite: `test_super_engine_omni_v460_clean.py`
-- the rigorous scientific validation workflow: `rigorous_master_test_suite_v460.py`
-- the mutation stress test: `mutation_stresstest_hardened.py`
-- the benchmark runner: `run_kernel_benchmark.sh`
+This branch documents and packages a reproducible Core 7 prototype designed to align with the repository's current architecture:
 
-## Repository
+- `N = 20` axiomatics and symbolic validation
+- canonical symplectic/Hamiltonian structure
+- Sobolev formulation in the space `V = H^2(M; C)`
+- adaptive ronmetrik / anomaly-stabilization layer
+- benchmarking against the `openai/math` corpus as a validation reference
+- deterministic stress-cycle audit output in JSON
 
-- GitHub: https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE
+## Repository context
 
-## Requirements
+The repository already contains the mature `OMNI-SUPER-ENGINE` kernel and validation tooling. This branch adds a focused Core 7 extension without replacing the current runtime.
 
-- Python 3.10+
-- numpy
-- pytest
+## Files in this branch
 
-Install dependencies:
-
-```bash
-python3 -m pip install -r requirements.txt
-```
+- `core7_master_engine.py` — lightweight validation and audit runner
+- `certs/core7_openai_audit_proof.json` — generated proof/audit artifact
+- `tests/test_core7_super_engine.py` — smoke tests for the Core 7 scaffold
 
 ## Quick start
 
-Run the core kernel:
-
 ```bash
-python3 super_engine_omni_v460.py
+python3 -m pip install -r requirements.txt
+python3 core7_master_engine.py
+python3 -m pytest -q tests/test_core7_super_engine.py
 ```
 
-Run the canonical test suite:
+## Scientific framing
 
-```bash
-python3 -m pytest -q
-```
+The Core 7 documentation in this branch follows the notation and working assumptions reflected in the current project materials:
 
-Run the rigorous validation suite:
+- `N = 20` typed axiomatics
+- Sobolev embedding domain `V = H^2(M; C)`
+- symplectic and Hamiltonian stability constraints
+- ronmetrik correction and anomaly damping for high-variance numerical states
 
-```bash
-python3 rigorous_master_test_suite_v460.py
-```
+This is best understood as an engineering scaffold and validation baseline, not as a claim that a fully derived physical theory has been completed in a single file.
 
-Run the benchmark script:
+## OpenAI corpus reference
 
-```bash
-bash run_kernel_benchmark.sh
-```
+The benchmark and validation notes in this branch explicitly reference the `openai/math` corpus as a structural benchmark family for mathematical consistency and model auditing. The repository remains compatible with the existing validation suite while allowing a dedicated Core 7 audit trail to coexist alongside existing artifacts.
 
-Run the hardened mutation stress test:
+## Reference
 
-```bash
-python3 mutation_stresstest_hardened.py --count 100000 --source super_engine_omni_v460.py
-```
+The project context is aligned with the broader theoretical notebook reference:
 
-## Validation datasheet
+- Geometrie der Felder: Die Mensah-Theorie
 
-See `TEST_INFO_DATASHEET.md` for a compact description of the validation assets and execution order.
+## Notes
 
-## Installation helper
-
-The repo includes an installation script:
-
-```bash
-bash install.sh
-```
-
-## Licensing and provenance
-
-This project is distributed as a research and engineering kernel under the repository's current project documentation and provenance notes. The code includes built-in integrity and audit checks for safety monitoring and forensic verification.
+This branch is intentionally conservative: it adds a reproducible Core 7 prototype and validation structure without disturbing the existing repository runtime and test behaviors.
