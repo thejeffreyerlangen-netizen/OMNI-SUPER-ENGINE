@@ -1,69 +1,77 @@
 # Super Engine Omni (v4.6.0)
 
-**Canonical Hardened Release with Physically Validated Gate Evaluator (3-Tier Safety), UAFF Forensic Integrity, and DAIECS Invariant Control.**
+Canonical hardened release of the Super Engine Omni kernel with the Physically Validated Gate Evaluator, UAFF forensic integrity checks, and DAIECS invariant monitoring.
 
----
+## Overview
 
-## 🚀 Overview
+This repository includes:
+- the primary runtime implementation: `super_engine_omni_v460.py`
+- the public compatibility wrapper: `omni_engine.py`
+- the canonical validation suite: `test_super_engine_omni_v460_clean.py`
+- the rigorous scientific validation workflow: `rigorous_master_test_suite_v460.py`
+- the mutation stress test: `mutation_stresstest_hardened.py`
+- the benchmark runner: `run_kernel_benchmark.sh`
 
-**Super Engine Omni v4.6.0** is an industrially hardened, high-precision mathematical and physical modeling kernel developed within the Mensah Theory framework.
-
-### Core Architectural Pillars
-
-1. **Physically Validated Gate Evaluator (3-Tier Safety Classification):**
-    * **PASSED (`VERIFIED_STABLE`):** Strict mathematical test-gate satisfied ($r \le \Lambda$).
-    * **FAILED (`PHYSICALLY_FEASIBLE_NO_COLLAPSE`):** Programmatic tolerance missed ($10^{-10} < r < 0.1$), but strictly within physical reactor stability boundaries. No collapse risk.
-    * **CRITICAL WARNING (`UNFEASIBLE_REAL_WORLD_COLLAPSE`):** Physical boundary exceeded ($r \ge 0.1$). Immediate collapse hazard in real-world reactor.
-2. **UAFF (Universal Agentic Forensic Framework):** Cryptographic SHA-256 out-of-band integrity verification detecting single-bit modifications (`HARD_CUT` / `COMPROMISED`).
-3. **DAIECS (Drift-Aware Invariant Engine Control System):** Continuous monitoring of topological drift, Sobolev $H^2$ dissipations, and volume invariance ($\det(J) \equiv 1$).
-4. **Forensically Proven Robustness:** Validated via a 100,000-case deterministic mutation stress test with a **100% detection rate**.
-
----
-
-## 📦 Repository
+## Repository
 
 - GitHub: https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE
 
----
+## Requirements
 
-## 🛠️ Installation & Requirements
+- Python 3.10+
+- numpy
+- pytest
 
-* **Python:** `3.10` or higher
-* **Dependencies:** `numpy`, `pytest`
+Install dependencies:
 
 ```bash
-python -m pip install numpy pytest
+python3 -m pip install -r requirements.txt
 ```
 
-### 🧪 Running the Validation Scripts
+## Quick start
+
+Run the core kernel:
 
 ```bash
-# 1. Core kernel execution
-python super_engine_omni_v460.py
+python3 super_engine_omni_v460.py
+```
 
-# 2. Canonical unit tests
-python -m pytest test_super_engine_omni_v460_clean.py -q
+Run the canonical test suite:
 
-# 3. Rigorous scientific validation suite
-python rigorous_master_test_suite_v460.py
+```bash
+python3 -m pytest -q
+```
 
-# 4. Benchmark launcher
+Run the rigorous validation suite:
+
+```bash
+python3 rigorous_master_test_suite_v460.py
+```
+
+Run the benchmark script:
+
+```bash
 bash run_kernel_benchmark.sh
-
-# 5. Hardened mutation stress test (100,000 iterations)
-python mutation_stresstest_hardened.py --count 100000 --source super_engine_omni_v460.py
 ```
 
----
+Run the hardened mutation stress test:
 
-## 📄 Validation Datasheet
+```bash
+python3 mutation_stresstest_hardened.py --count 100000 --source super_engine_omni_v460.py
+```
 
-See the dedicated documentation file:
+## Validation datasheet
 
-- `TEST_INFO_DATASHEET.md`
+See `TEST_INFO_DATASHEET.md` for a compact description of the validation assets and execution order.
 
-This file contains a compact description of the included validation assets, their purpose, and the recommended local execution order.
+## Installation helper
 
----
+The repo includes an installation script:
 
-📄 **License & Copyright:** Copyright (C) 2026 Mensah Theory Framework — Principal Creator & Architect: Jeffrey Mensah.
+```bash
+bash install.sh
+```
+
+## Licensing and provenance
+
+This project is distributed as a research and engineering kernel under the repository's current project documentation and provenance notes. The code includes built-in integrity and audit checks for safety monitoring and forensic verification.
