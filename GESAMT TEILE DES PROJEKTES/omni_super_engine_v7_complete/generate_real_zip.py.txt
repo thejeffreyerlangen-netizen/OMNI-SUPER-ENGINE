@@ -1,0 +1,79 @@
+import os
+import zipfile
+import numpy as np
+
+# 1. Verzeichnisstruktur lokal anlegen
+base_dir = "qe6d_export"
+data_dir = os.path.join(base_dir, "data")
+os.makedirs(data_dir, exist_ok=True)
+
+t = np.linspace(0, 10 * np.pi, 1000)
+print("📊 Generiere mathematische CSV-Matrizen für MATLAB...")
+
+# --- EQ1: Quantum String ---
+eq1_data = np.column_stack([
+    t, 
+    np.sin(2 * t) * np.cos(0.5 * t), 
+    np.cos(2 * t) * np.sin(0.5 * t), 
+    0.5 * np.sin(3 * t), 
+    1.0 + 0.4 * np.sin(4 * t)
+])
+np.savetxt(os.path.join(data_dir, "eq1_quantum_string.csv"), eq1_data, 
+           delimiter=",", header="t,q1,q2,amplitude,phase_offset", comments="")
+
+# --- EQ2: Hypersonic Shockwave ---
+eq2_data = np.column_stack([
+    t[:900], 
+    0.6 * np.tanh(t[:900] - 7) + 0.2 * np.sin(3 * t[:900]), 
+    0.5 * np.cos(2 * t[:900]) * np.exp(-0.05 * t[:900]), 
+    0.8 * np.sin(1.5 * t[:900]), 
+    15.0 + 9.5 * np.sin(t[:900])
+])
+np.savetxt(os.path.join(data_dir, "eq2_hypersonic_shockwave.csv"), eq2_data, 
+           delimiter=",", header="t,u_x,u_y,grad_P,T_mach", comments="")
+
+# --- EQ3: Kuramoto Oscillator ---
+eq3_data = np.column_stack([
+    t, 
+    np.sin(t) * (1.0 - np.exp(-0.2 * t)), 
+    np.cos(t) * (1.0 - np.exp(-0.2 * t)), 
+    np.sin(1.5 * t), 
+    0.4 + 0.58 * (1.0 - np.exp(-0.15 * t))
+])
+np.savetxt(os.path.join(data_dir, "eq3_kuramoto_oscillator.csv"), eq3_data, 
+           delimiter=",", header="t,x,y,z,coherence_r", comments="")
+
+# --- EQ4: Submarine Hydrodynamics ---
+eq4_data = np.column_stack([
+    t[:800], 
+    1.2 * np.sin(t[:800]) * np.cos(0.5 * t[:800]), 
+    0.8 * np.cos(t[:800]) * np.sin(0.3 * t[:800]), 
+    0.3 * np.sin(2 * t[:800]), 
+    24.5 + 4.2 * np.sin(1.5 * t[:800]) * np.cos(2 * t[:800])
+])
+np.savetxt(os.path.join(data_dir, "eq4_submarine_hydrodynamics.csv"), eq4_data, 
+           delimiter=",", header="t,v_r,v_theta,P_hydro,WSS", comments="")
+
+# --- EQ5: Tokamak Reactor ---
+eq5_data = np.column_stack([
+    t, 
+    2.5 * np.sin(t) * np.cos(0.4 * t), 
+    1.5 * np.cos(t) * np.sin(0.4 * t), 
+    0.3 * np.sin(2.5 * t), 
+    4.0 + 1.2 * np.cos(0.8 * t)
+])
+np.savetxt(os.path.join(data_dir, "eq5_tokamak_reactor.csv"), eq5_data, 
+           delimiter=",", header="t,plasma_Ip,poloidal_flux,vertical_Zpos,mag_pressure", comments="")
+
+# 2. ZIP-Archivierung starten
+zip_filename = "qe6d_matlab_export.zip"
+print(f"📦 Verpacke Daten in '{zip_filename}'...")
+
+with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            file_path = os.path.join(root, file)
+            archive_name = os.path.relpath(file_path, os.path.dirname(base_dir))
+            zipf.write(file_path, archive_name)
+
+print(f"🚀 FERTIG! Die physische Datei '{zip_filename}' wurde erfolgreich in deinem Ordner erstellt!")
