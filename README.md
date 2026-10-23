@@ -1,6 +1,6 @@
 # OMNI SUPER ENGINE v7.0 (CORE 7)
 
-A compact physics-focused Python project for symplectic invariant enforcement, Ziolkowski stage translation, and hyper-viscous smoothing for fluid-field evolution.
+Super Engine Omni (v7.0): M-DSL IR-Kernel for Navier-Stokes and field PDEs. High-performance vectorized simulation framework with H² Sobolev damping for deterministic plasma stability, reactor safety, and safety-critical continuum dynamics.
 
 ## Overview
 
@@ -64,4 +64,4 @@ python -m pytest -q
 ## Notes on layout
 
 - **Active code**: `src/omni_engine/`
-- **Historical / duplicate bundles** (v4.x, v6.x, earlier v7 packages, mensah packages, matlab exports) are kept under `legacy/` and as zips under `archive/` for reference. They are not required for running the current engine.
+- **Historical / duplicate bundles** (v4.x, v6.x, earlier v7 packages, mensah packages, matlab exports) are kept under `legacy/` and as zips under `archive/` for reference. They are not required for the active engine workflow.
