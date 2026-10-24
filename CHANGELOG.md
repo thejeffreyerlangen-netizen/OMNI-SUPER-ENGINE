@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [8.2.0] - 2026-10-24
+
+### Added
+- release alignment for the v8.2 engineering baseline
+- updated repository metadata and version tracking
+- documentation cleanup for the stable core release
+
+### Changed
+- updated README to reflect the v8.2 release version
+- normalized release messaging around the deterministic simulation stack
+- clarified the project documentation around active code and legacy archives
+
+### Notes
+- Legacy packaged artifacts remain in the repository root but are not part of the active runtime path.
+- The active code path remains the stable deterministic engine and test suite under the project root and `tests/`.
+
 ## [7.0.0] - 2026-10-22
 
 ### Added

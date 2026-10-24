@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omni_super_engine"
-version = "7.0.0"
-description = "Super Engine Omni v7.0 (Core 7)"
+version = "8.2.0"
+description = "Super Engine Omni v8.2 (deterministic simulation framework)"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
