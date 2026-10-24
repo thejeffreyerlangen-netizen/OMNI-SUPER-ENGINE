@@ -38,11 +38,15 @@ full = ["torch>=2.0", "scipy>=1.9"]
 dev = ["pytest>=7.0", "torch>=2.0", "scipy>=1.9"]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USER/omni-super-engine"
-Repository = "https://github.com/YOUR_USER/omni-super-engine"
-Issues = "https://github.com/YOUR_USER/omni-super-engine/issues"
+Homepage = "https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE"
+Repository = "https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE"
+Issues = "https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["omni_engine*"]
 
 [tool.pytest.ini_options]
