@@ -1,5 +1,5 @@
 """
-=======================================================================
+============================================================================
 OMNI SUPER ENGINE v8.2 (CORE 8) – QUANTUM-TOPOLOGICAL EXTENSION
 Unified Master Architecture + Evolutionary Layer (Release)
 
@@ -16,7 +16,7 @@ v8.2 = v8.1 Fixes (vollständig) + Release-Polishes:
   - full_v8-Mischung L2-normerhaltend
   - konfigurierbare Warning-Schwellwerte (PI / Topology)
   - optional Omega_key in full_v8-Pipeline
-=======================================================================
+============================================================================
 """
 
 from __future__ import annotations
@@ -40,9 +40,9 @@ except ImportError:
     SCIPY_AVAILABLE = False
 
 
-# ==========================================================================
+# ===========================================================================
 #  ENVIRONMENT
-# ==========================================================================
+# ===========================================================================
 
 class EnvironmentCarrier:
     """Globale Umgebungsparameter und Resonanzanker."""
@@ -55,9 +55,9 @@ class EnvironmentCarrier:
         self.metric_signature = [-1, 1, 1, 1]
 
 
-# ==========================================================================
+# ===========================================================================
 #  PHYSICS BRIDGE
-# ==========================================================================
+# ===========================================================================
 
 class OmniPhysicsBridge:
     """Klassische + relativistische Übersetzungsschicht."""
@@ -126,6 +126,7 @@ class OmniPhysicsBridge:
             return v.copy()
         k = np.fft.fftfreq(n) * n
         field_fft = np.fft.fft(v)
+        # hyper (k⁴) + viskos (k²) – nu fließt ein
         filt = np.exp(-abs(hyper_coeff) * (k ** 4) - abs(nu) * (k ** 2))
         return np.real(np.fft.ifft(field_fft * filt))
 
@@ -210,9 +211,9 @@ class OmniPhysicsBridge:
         }
 
 
-# ==========================================================================
+# ===========================================================================
 #  1. PATH-INTEGRAL MONTE CARLO
-# ==========================================================================
+# ===========================================================================
 
 class PathIntegralMonitor:
     """Feynman-Pfadintegral-Monitor (PIMC) mit konfigurierbarem RNG-Seed."""
@@ -288,9 +289,9 @@ class PathIntegralMonitor:
         }
 
 
-# ==========================================================================
+# ===========================================================================
 #  2. NEURAL OPERATOR + ADAPTIVE CONTROLLER
-# ==========================================================================
+# ===========================================================================
 
 class LightweightFourierOperator(nn.Module if TORCH_AVAILABLE else object):
     """FNO-lite in float64 für Konsistenz mit dem Zustandsvektor."""
@@ -360,6 +361,7 @@ class AdaptiveHyperController:
         target_alpha = min(0.24, 0.05 + 0.3 * min(abs(residual), 1.0))
         self.alpha = 0.9 * self.alpha + 0.1 * target_alpha
 
+        # freq_scale: bei hohem Residuum leicht erhöhen (mehr Diffusion)
         target_fs = 1.0 + 0.5 * min(abs(residual), 1.0)
         self.freq_scale = 0.9 * self.freq_scale + 0.1 * target_fs
         self.freq_scale = float(np.clip(self.freq_scale, 0.5, 2.0))
@@ -391,9 +393,9 @@ class AdaptiveHyperController:
         }
 
 
-# ==========================================================================
+# ===========================================================================
 #  3. HOLOGRAPHIC TOPOLOGY
-# ==========================================================================
+# ===========================================================================
 
 class HolographicTopologyAnalyzer:
     """TDA-lite: Betti β0, β1-Proxy, Defekt-Score."""
@@ -468,9 +470,9 @@ class HolographicTopologyAnalyzer:
         }
 
 
-# ==========================================================================
+# ===========================================================================
 #  4. TENSOR ACCELERATION
-# ==========================================================================
+# ===========================================================================
 
 class TensorAccelerationLayer:
     """Torch/NumPy-Backend für Laplace und FFT-Smoothing."""
@@ -523,9 +525,9 @@ class TensorAccelerationLayer:
         }
 
 
-# ==========================================================================
+# ===========================================================================
 #  MASTER CORE v8.2
-# ==========================================================================
+# ===========================================================================
 
 class SuperEngineOmniCore8Master:
     """Omni Core v8.2 – Release-Build Quantum-Topological Extension."""
@@ -575,6 +577,7 @@ class SuperEngineOmniCore8Master:
     def apply_stable_laplacian_flow(self, dt: float = 0.01, alpha: Optional[float] = None):
         if alpha is None:
             base_alpha = min(dt * (self.env.base_frequency / 100.0), 0.24)
+            # freq_scale aus AdaptiveController einbeziehen
             fs = getattr(self.adaptive, "freq_scale", 1.0)
             alpha = min(base_alpha * fs, 0.24)
             alpha = min(self.adaptive.alpha, alpha) if hasattr(self.adaptive, "alpha") else alpha
@@ -672,6 +675,8 @@ class SuperEngineOmniCore8Master:
             adaptive_output = self.adaptive.update(current_residual, self.state_psi)
             self.state_psi = adaptive_output["refined_state"]
 
+        # else: standard – nur Laplace + Symplektik
+
         if physics_mode != "omega_key":
             self.apply_stable_laplacian_flow(dt=kwargs.get("dt", 0.01))
 
@@ -718,19 +723,9 @@ class SuperEngineOmniCore8Master:
         }
 
 
-class SuperEngineOmniCore7Master(SuperEngineOmniCore8Master):
-    """Backward-compatible alias for the legacy class name used in older tests."""
-
-    def __init__(self, base_frequency: float = 98.112, **kwargs):
-        super().__init__(**kwargs)
-        self.base_frequency = float(base_frequency)
-        self.env.base_frequency = float(base_frequency)
-        self.bridge = OmniPhysicsBridge(self.env.base_frequency)
-
-
-# ==========================================================================
+# ===========================================================================
 #  DEMO
-# ==========================================================================
+# ===========================================================================
 
 if __name__ == "__main__":
     print("=" * 70)
