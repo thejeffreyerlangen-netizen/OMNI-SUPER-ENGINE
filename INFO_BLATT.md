@@ -152,7 +152,22 @@ Beispielhafte Assertions:
 - keine NaN-Werte im geglätteten Feld
 - Status == VERIFIED_STABLE
 
-## 5) Was die Logik technisch macht
+## 5) Wichtiger Hinweis zu Testbench, Grafiken und Prüfberichten
+
+Im Repository-Root liegen neben dem eigentlichen Code auch Testbench-Ausgaben, Diagramme, Prüfberichte und Visualisierungen, die für Validierung, Benchmarking und Nachweis der Ergebnisse relevant sind. Diese Dateien sind keine primären Laufzeitkomponenten, sondern ergänzende Artefakte für Tests, Analyse und Dokumentation.
+
+Beispiele dafür sind:
+
+- PNG-Graphen und Phase-Space-Visualisierungen
+- Benchmark-/Prüfberichte
+- Ergebnisdateien aus Testläufen
+- Exportdaten für wissenschaftliche oder technische Auswertung
+
+Diese Objekte dienen dazu, die Qualität, Stabilität und Ergebnisse der Simulationen nachvollziehbar zu dokumentieren, und sollten als ergänzende Prüf- bzw. Analyseausgaben verstanden werden – nicht als Hauptkernel des Projekts.
+
+Der aktive Code liegt im Paketbereich `src/omni_engine/`, während Testbench-Ausgaben, Grafiken und Prüfberichte im Root-Bereich bzw. in `assets/`, `docs/` und ähnlichen Bereichen dokumentiert sind.
+
+## 6) Was die Logik technisch macht
 
 ### OmniPhysicsBridge
 
@@ -211,7 +226,7 @@ Die Standardstatusmeldung ist:
 
 - VERIFIED_STABLE
 
-## 6) Start / Ausführung
+## 7) Start / Ausführung
 
 ### Windows PowerShell
 
@@ -239,7 +254,7 @@ python run_v7_test_suite.py
 python -m pytest -q
 ```
 
-## 7) Kurzfazit
+## 8) Kurzfazit
 
 Das Repository enthält eine funktionale Python-Implementierung für eine "Super Engine Omni Core 7" mit:
 
@@ -254,7 +269,7 @@ Das vollständige Projekt liegt primär im Ordner:
 
 Die ZIP-Dateien und älteren Snapshot-Versionen sind eher Archiv-/Historienartefakte als Kernprojekt.
 
-## 8) Empfehlungen
+## 9) Empfehlungen
 
 Wenn du das Projekt lokal weiterentwickeln willst:
 
@@ -264,7 +279,7 @@ Wenn du das Projekt lokal weiterentwickeln willst:
 4. Fokus: omni_super_engine_master_v7.py
 5. Tests: tests/test_omni_physics_bridge.py
 
-## 9) Link
+## 10) Link
 
 https://github.com/thejeffreyerlangen-netizen/OMNI-SUPER-ENGINE
 
