@@ -1,24 +1,33 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-## [7.0.0] - 2026-10-22
+## [8.2.0] – 2026-10-24
 
 ### Added
-- professional project metadata via `pyproject.toml`
-- clean repository documentation and installation guidance
-- validation-focused pytest configuration
-- project-local test runner for standardized local execution
-- repository status documentation for release readiness
-- CI workflow for automated validation on push and pull request
-- MIT license metadata
+- Configurable topology thresholds (`defect_warn`, `beta0_frac_warn`)
+- Configurable path-integral `instability_factor`
+- Optional `include_omega=True` in `full_v8` pipeline
 
-### Changed
-- updated README to reflect the active v7.0 core architecture
-- normalized dependency configuration
-- improved setup and validation workflow clarity
-- aligned release documentation with the active engineering codebase
+### Fixed (from v8.0 analysis)
+- Dimension desync across submodules → `set_dimension()`
+- Neural operator dtype float32 → float64
+- Dead `freq_scale` → adaptive and applied to Laplace
+- Unused `nu` in Navier–Stokes → \(k^2\) term
+- Removed unused `find_peaks` import
+- Unknown `physics_mode` → explicit status
+- RNG seed configurable
+- State mixing L2-norm preserving
 
-### Notes
-- Legacy packaged artifacts remain in the repository root but are not part of the active runtime path.
-- The active code path is the v7.0 physics bridge and test suite under `omni_super_engine_master_v7.py` and `tests/`.
+## [8.1.0] – 2026-10-24
+Hardening release (see above fixes).
+
+## [8.0.0] – 2026-10-24
+Quantum-topological extension: PIMC, FNO, TDA-lite, Torch backend.
+
+## [7.3.0] – 2026-10-24
+Overflow-safe relativity, Omega_key restored, stable Laplace, residual API.
+
+## [7.1.0] – 2026-10-24
+Symplectic \(\det=+1\), Ziolkowski mass guards.
+
+## [7.0.0] – 2026-10-24
+Initial unified master architecture.

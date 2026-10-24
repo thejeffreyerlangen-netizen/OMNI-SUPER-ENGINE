@@ -1,15 +1,50 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "omni_super_engine"
-version = "7.0.0"
-description = "Super Engine Omni v7.0 (Core 7)"
+name = "omni-super-engine"
+version = "8.2.0"
+description = "Quantum-Topological Simulation Framework: symplectic invariants, relativistic rocketry, path-integral Monte Carlo, neural operators, and TDA-lite"
 readme = "README.md"
-requires-python = ">=3.8"
-dependencies = [
-    "numpy>=1.20.0",
-    "pytest>=7.0.0",
-    "matplotlib>=3.5.0"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "OMNI Development"}
 ]
+keywords = [
+    "physics", "simulation", "symplectic", "path-integral",
+    "topology", "relativistic", "navier-stokes", "neural-operator"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy>=1.22",
+]
+
+[project.optional-dependencies]
+torch = ["torch>=2.0"]
+scipy = ["scipy>=1.9"]
+full = ["torch>=2.0", "scipy>=1.9"]
+dev = ["pytest>=7.0", "torch>=2.0", "scipy>=1.9"]
+
+[project.urls]
+Homepage = "https://github.com/YOUR_USER/omni-super-engine"
+Repository = "https://github.com/YOUR_USER/omni-super-engine"
+Issues = "https://github.com/YOUR_USER/omni-super-engine/issues"
+
+[tool.setuptools.packages.find]
+include = ["omni_engine*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

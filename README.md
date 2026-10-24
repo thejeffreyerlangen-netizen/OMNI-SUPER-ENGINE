@@ -1,85 +1,138 @@
-# OMNI SUPER ENGINE v7.0 (CORE 7)
+# OMNI SUPER ENGINE v8.2
 
-Super Engine Omni (v7.0): M-DSL IR-Kernel for Navier-Stokes and field PDEs. High-performance vectorized simulation framework with H² Sobolev damping for deterministic plasma stability, reactor safety, and safety-critical continuum dynamics.
+**Quantum-Topological Simulation Framework**
 
-## Overview
+Deterministic core (symplectic invariants, H² hyperviscosity, relativistic rocketry) plus evolutionary layers: Path-Integral Monte Carlo, adaptive Fourier neural operator, holographic topology (Betti numbers), and optional PyTorch acceleration.
 
-OMNI SUPER ENGINE is a research-oriented computational framework for continuum mechanics, Navier-Stokes equations, and field PDEs. The project combines an M-DSL-based intermediate representation with high-performance numerical kernels and H² Sobolev-inspired smoothing to preserve stability in strongly coupled fluid and field systems.
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-This repository is designed for deterministic simulation workflows, plasma stability analysis, and safety-critical reactor and continuum dynamics tasks. The active implementation is primarily Python-based, with supporting shell tooling for automation and execution workflows.
-
-## Key capabilities
-
-- M-DSL IR kernel and symbolic / numerical bridge
-- symplectic invariant enforcement via determinant scaling
-- Ziolkowski upper-stage mass and trajectory translation
-- H² Sobolev-inspired hyperviscous smoothing
-- validation and regression testing for engineering workflows
-- support for numerical stability analysis and simulation research
-
-## Repository structure
-
-```text
-omni-super-engine/
-├── README.md
-├── LICENSE
-├── CHANGELOG.md
-├── pyproject.toml
-├── requirements.txt
-├── pytest.ini
-├── .gitignore
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── src/
-│   └── omni_engine/          # Active source (master_v7, core7, ...)
-├── tests/                    # Unit / validation tests
-├── docs/                     # Project status, notes, chapter drafts
-├── data/
-│   └── qe6d/                 # CSV export data
-├── reports/
-│   ├── figures/              # PNG visualizations
-│   └── pdfs/                 # Reports and documentation PDFs
-├── scripts/                  # Install, test runners, utilities
-├── config/                   # Reserved configuration area
-├── archive/                  # Historical zip packages
-├── legacy/                   # Full older version trees
-└── ...
-```
-
-## Language profile
-
-The repository is predominantly Python-based, with a small Shell component for automation and execution support.
-
-## Quickstart
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python scripts/run_v7_test_suite.py
-# or
-python -m pytest -q
-```
+---
 
 ## Features
 
-- symplectic invariant enforcement with `det(J) == 1.0`
-- Ziolkowski upper-stage mass model
-- hyperviscous smoothing layer for fluid evolution
-- master engine evolution cycle
-- automated validation in `tests/`
-- compatibility with engineering and research simulation pipelines
+| Layer | Description |
+|-------|-------------|
+| **Symplectic guard** | Enforces det(J) = +1 (orientation-preserving) |
+| **Omega_key** | Multi-domain resonance tensor (HI-line, Schumann, torsion, …) |
+| **Navier–Stokes H²** | Biharmonic hyperviscosity + viscous k² term in Fourier space |
+| **Ziolkowski / Ackeret** | Classical and relativistic rocket equation, overflow-safe |
+| **Path-Integral (PIMC)** | Stochastic trajectory ensemble, action weights, early-warning |
+| **Neural Operator** | Lightweight FNO + residual-driven alpha / freq_scale adaptation |
+| **Topology (TDA-lite)** | beta0, beta1-proxy, defect score |
+| **Tensor backend** | NumPy or PyTorch (CPU/CUDA), float64 |
 
-## Notes on layout
+---
 
-- **Active code**: `src/omni_engine/`
-- **Historical / duplicate bundles** (v4.x, v6.x, earlier v7 packages, mensah packages, Matlab exports) are kept under `legacy/` and as zip archives under `archive/` for reference.
-- These historical bundles are not required for the active engine workflow.
-
-## Validation
+## Install
 
 ```bash
-python -m pytest -q
+# Minimal (NumPy only)
+pip install -e .
+
+# Full stack (Torch + SciPy)
+pip install -e ".[full]"
+
+# Or from requirements
+pip install -r requirements-full.txt
 ```
+
+---
+
+## Quick start
+
+```python
+import numpy as np
+from omni_engine import SuperEngineOmniCore8Master
+
+engine = SuperEngineOmniCore8Master(dimension=20, n_paths=32, seed=42)
+engine.initialize_state(np.linspace(1.0, 2.0, 20))
+
+# Deterministic modes (v7.3 compatible)
+r = engine.execute_evolution_cycle("omega_key")
+print(r["status"], r["symplectic_determinant"])
+
+r = engine.execute_evolution_cycle("navier_stokes", nu=1e-3, hyper_coeff=1e-4)
+r = engine.execute_evolution_cycle(
+    "ziolkowski",
+    m_payload=5000, isp=450, delta_v=4500, structural_ratio=0.10,
+    relativistic=True,
+)
+
+# Evolutionary modes (v8.x)
+r = engine.execute_evolution_cycle("path_integral", n_steps=6)
+r = engine.execute_evolution_cycle("adaptive")
+r = engine.execute_evolution_cycle("topology")
+r = engine.execute_evolution_cycle("full_v8", include_omega=True)
+
+print(r["status"], r["current_residual"])
+```
+
+### Physics modes
+
+| Mode | Role |
+|------|------|
+| `standard` | Laplace flow + symplectic projection |
+| `omega_key` | Resonance tensor evaluation |
+| `navier_stokes` | H² + viscous smoothing |
+| `ziolkowski` | Rocket mass ratios (classical / relativistic) |
+| `path_integral` | PIMC future ensemble |
+| `adaptive` | Neural operator + hyperparameter adaptation |
+| `topology` | Betti / defect analysis |
+| `full_v8` | Topology → PIMC → Adaptive → Laplace → Symplectik |
+
+---
+
+## Project layout
+
+```
+omni-super-engine/
+├── omni_engine/
+│   ├── __init__.py
+│   └── core.py          # full engine (v8.2)
+├── tests/
+│   └── test_engine.py
+├── examples/
+│   ├── basic_demo.py
+│   └── singularity_damping.py
+├── docs/
+│   └── ARCHITECTURE.md
+├── pyproject.toml
+├── requirements.txt
+├── requirements-full.txt
+├── LICENSE
+└── README.md
+```
+
+---
+
+## Tests
+
+```bash
+pip install -e ".[dev]"
+pytest -q
+```
+
+---
+
+## Version lineage
+
+| Version | Focus |
+|---------|--------|
+| v7.0 | Initial unified architecture |
+| v7.1 | Symplectic det=+1, mass guards |
+| v7.2 | Relativistic Ackeret, Laplace flow |
+| v7.3 | Overflow-safe relativity, Omega_key restored |
+| v8.0 | Path-integral, FNO, topology, Torch backend |
+| v8.1 | Hardening (dim-sync, float64, nu, guards) |
+| **v8.2** | Release: configurable thresholds, optional Omega in full_v8 |
+
+---
+
+## License
+
+MIT – see [LICENSE](LICENSE).
+
+## Citation
+
+If you use this framework in research, please cite the repository and version tag (`v8.2.0`).
