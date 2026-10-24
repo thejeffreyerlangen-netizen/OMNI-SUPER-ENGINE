@@ -1,138 +1,92 @@
 # OMNI SUPER ENGINE v8.2
 
-**Quantum-Topological Simulation Framework**
+Deterministic simulation framework for continuum mechanics, Navier–Stokes flow, and relativistic trajectory dynamics.
 
-Deterministic core (symplectic invariants, H² hyperviscosity, relativistic rocketry) plus evolutionary layers: Path-Integral Monte Carlo, adaptive Fourier neural operator, holographic topology (Betti numbers), and optional PyTorch acceleration.
+## Overview
 
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+OMNI SUPER ENGINE is a research-oriented Python framework for deterministic field dynamics, symplectic invariants, hyperviscous smoothing, and mission-ready trajectory analysis. The current repository structure keeps the active code and tests in a clean package layout while preserving historical releases in archive and legacy folders.
 
----
-
-## Features
-
-| Layer | Description |
-|-------|-------------|
-| **Symplectic guard** | Enforces det(J) = +1 (orientation-preserving) |
-| **Omega_key** | Multi-domain resonance tensor (HI-line, Schumann, torsion, …) |
-| **Navier–Stokes H²** | Biharmonic hyperviscosity + viscous k² term in Fourier space |
-| **Ziolkowski / Ackeret** | Classical and relativistic rocket equation, overflow-safe |
-| **Path-Integral (PIMC)** | Stochastic trajectory ensemble, action weights, early-warning |
-| **Neural Operator** | Lightweight FNO + residual-driven alpha / freq_scale adaptation |
-| **Topology (TDA-lite)** | beta0, beta1-proxy, defect score |
-| **Tensor backend** | NumPy or PyTorch (CPU/CUDA), float64 |
-
----
-
-## Install
-
-```bash
-# Minimal (NumPy only)
-pip install -e .
-
-# Full stack (Torch + SciPy)
-pip install -e ".[full]"
-
-# Or from requirements
-pip install -r requirements-full.txt
-```
-
----
-
-## Quick start
-
-```python
-import numpy as np
-from omni_engine import SuperEngineOmniCore8Master
-
-engine = SuperEngineOmniCore8Master(dimension=20, n_paths=32, seed=42)
-engine.initialize_state(np.linspace(1.0, 2.0, 20))
-
-# Deterministic modes (v7.3 compatible)
-r = engine.execute_evolution_cycle("omega_key")
-print(r["status"], r["symplectic_determinant"])
-
-r = engine.execute_evolution_cycle("navier_stokes", nu=1e-3, hyper_coeff=1e-4)
-r = engine.execute_evolution_cycle(
-    "ziolkowski",
-    m_payload=5000, isp=450, delta_v=4500, structural_ratio=0.10,
-    relativistic=True,
-)
-
-# Evolutionary modes (v8.x)
-r = engine.execute_evolution_cycle("path_integral", n_steps=6)
-r = engine.execute_evolution_cycle("adaptive")
-r = engine.execute_evolution_cycle("topology")
-r = engine.execute_evolution_cycle("full_v8", include_omega=True)
-
-print(r["status"], r["current_residual"])
-```
-
-### Physics modes
-
-| Mode | Role |
-|------|------|
-| `standard` | Laplace flow + symplectic projection |
-| `omega_key` | Resonance tensor evaluation |
-| `navier_stokes` | H² + viscous smoothing |
-| `ziolkowski` | Rocket mass ratios (classical / relativistic) |
-| `path_integral` | PIMC future ensemble |
-| `adaptive` | Neural operator + hyperparameter adaptation |
-| `topology` | Betti / defect analysis |
-| `full_v8` | Topology → PIMC → Adaptive → Laplace → Symplectik |
-
----
+This release aligns the project with the v8.2 baseline and keeps the active runtime path structured and reproducible.
 
 ## Project layout
 
-```
-omni-super-engine/
-├── omni_engine/
-│   ├── __init__.py
-│   └── core.py          # full engine (v8.2)
+```text
+OMNI-SUPER-ENGINE/
+├── README.md
+├── CHANGELOG.md
+├── LICENSE
+├── pyproject.toml
+├── requirements.txt
+├── requirements-full.txt
+├── .gitignore
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── src/
+│   └── omni_engine/
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── core.py
+│       └── utils.py
 ├── tests/
-│   └── test_engine.py
+│   ├── __init__.py
+│   ├── test_engine.py
+│   ├── test_omni_physics_bridge.py
+│   └── test_release.py
 ├── examples/
 │   ├── basic_demo.py
 │   └── singularity_damping.py
 ├── docs/
-│   └── ARCHITECTURE.md
-├── pyproject.toml
-├── requirements.txt
-├── requirements-full.txt
-├── LICENSE
-└── README.md
+│   ├── ARCHITECTURE.md
+│   ├── RELEASE_NOTES.md
+│   └── PROJECT_STATUS.md
+├── scripts/
+│   ├── install.sh
+│   ├── run_v7_test_suite.py
+│   └── run_kernel_benchmark.sh
+├── assets/
+│   ├── figures/
+│   ├── graphs/
+│   └── reports/
+├── archive/
+│   └── README.md
+├── legacy/
+│   └── README.md
+└── .venv/   # local environment, not committed
 ```
 
----
+## Active runtime
 
-## Tests
+The active Python package lives under `src/omni_engine/` and is the path used by the tests and examples.
+
+## Quick start
 
 ```bash
-pip install -e ".[dev]"
-pytest -q
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pytest -q
 ```
 
----
+## Features
 
-## Version lineage
+- symplectic invariant enforcement
+- Ziolkowski mass / trajectory translation
+- hyperviscous smoothing for Navier–Stokes flow
+- deterministic evolution-cycle interface
+- test-backed engineering workflow
 
-| Version | Focus |
-|---------|--------|
-| v7.0 | Initial unified architecture |
-| v7.1 | Symplectic det=+1, mass guards |
-| v7.2 | Relativistic Ackeret, Laplace flow |
-| v7.3 | Overflow-safe relativity, Omega_key restored |
-| v8.0 | Path-integral, FNO, topology, Torch backend |
-| v8.1 | Hardening (dim-sync, float64, nu, guards) |
-| **v8.2** | Release: configurable thresholds, optional Omega in full_v8 |
+## Notes on legacy artifacts
 
----
+Historical ZIP files, older package bundles, and research export folders are intentionally kept out of the active runtime path and stored under `archive/` and `legacy/` for reference only.
 
-## License
+## Validation
 
-MIT – see [LICENSE](LICENSE).
+```bash
+python -m pytest -q
+```
 
-## Citation
+## Version
 
-If you use this framework in research, please cite the repository and version tag (`v8.2.0`).
+Current release: v8.2.0

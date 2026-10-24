@@ -1,28 +1,21 @@
-# Architecture
+# OMNI SUPER ENGINE Architecture
 
-## Core stack
+## Purpose
 
-```
-SuperEngineOmniCore8Master
-├── EnvironmentCarrier          # global frequencies / metric signature
-├── OmniPhysicsBridge           # symplectic, Omega_key, NS, Ziolkowski
-├── PathIntegralMonitor         # PIMC ensemble
-├── AdaptiveHyperController     # FNO-lite + α / freq_scale
-├── HolographicTopologyAnalyzer # Betti β0 / β1-proxy / defect
-└── TensorAccelerationLayer     # NumPy | Torch float64
-```
+This project is organized around a small active runtime and a clean separation between the source package, tests, examples, docs, and historical bundles.
 
-## Evolution cycle
+## Active code path
 
-1. Mode-specific operator (physics / quantum / topology / adaptive)
-2. Optional proactive correction (PIMC mean state on early warning)
-3. Stable Laplacian flow (CFL-limited, `freq_scale`-modulated)
-4. Symplectic projection \(\det(J)=+1\)
-5. Residual + structured status dict
+The active Python package lives under `src/omni_engine/` and should remain the canonical runtime entry point for the project.
 
-## Design constraints
+## Structure
 
-- No silent negative rocket masses
-- No `det = -1` after projection
-- Relativistic mass ratio computed in log-space (no `exp` overflow)
-- Submodule dimensions stay in sync via `set_dimension`
+- `src/omni_engine/` contains the package code
+- `tests/` contains pytest coverage for the active package
+- `examples/` contains runnable usage examples
+- `docs/` contains design and release notes
+- `archive/` and `legacy/` preserve historical material
+
+## Notes
+
+Historical packages and exported datasets should not be mixed into the active runtime path. They are kept for traceability and reference, but not used as the primary import path.
