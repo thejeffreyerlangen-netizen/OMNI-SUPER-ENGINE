@@ -90,3 +90,9 @@ class SuperEngineOmniCore7Master:
             result["status"] = "VERIFIED_STABLE"
 
         return result
+
+
+class SuperEngineOmniCore8Master(SuperEngineOmniCore7Master):
+    """Compatibility alias for the newer naming convention."""
+
+    pass
