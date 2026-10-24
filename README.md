@@ -2,7 +2,7 @@
 
 **Quantum-Topological Simulation Framework**
 
-Deterministic core (symplectic invariants, H² hyperviscosity, relativistic rocketry) plus evolutionary layers: Path-Integral Monte Carlo, adaptive Fourier neural operator, holographic topology (Betti numbers), and optional PyTorch acceleration.
+Deterministic core (symplectic invariants, H² hyperviscosity, relativistic rocketry) plus evolutionary layers: Path-Integral Monte Carlo, adaptive Fourier neural operator, holographic topology (Betti-like defect scoring), and deterministic PDE stabilization.
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -117,6 +117,17 @@ pytest -q
 
 ## Version lineage
 
+This repository contains both archived release bundles and the active engineering lineage.
+
+### Historical packaged bundles
+
+| Version | Status |
+|---------|--------|
+| v4.6.0 | Historical production bundle |
+| v6.2.0 | Historical master-unified bundle |
+
+### Active project lineage
+
 | Version | Focus |
 |---------|--------|
 | v7.0 | Initial unified architecture |
@@ -126,6 +137,8 @@ pytest -q
 | v8.0 | Path-integral, FNO, topology, Torch backend |
 | v8.1 | Hardening (dim-sync, float64, nu, guards) |
 | **v8.2** | Release: configurable thresholds, optional Omega in full_v8 |
+
+> Note: the root-level v4.6 and v6.2 artifacts are legacy archive bundles. The active code path and documentation lineage are v7.x → v8.x.
 
 ---
 
